@@ -4009,3 +4009,12 @@ aa 5.4/Saved/Telemetry/Telemetry.json
 *.uasset
 *.uasset
 *.uasset
+*.ini
+*.ini
+*.ini
+*.log
+aa/Saved/Logs/aa.log
+aa/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini
+aa/Saved/Logs/aa.log
+aa/Saved/SourceControl/UncontrolledChangelists.json
+aa/Saved/Telemetry/Telemetry.json
