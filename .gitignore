@@ -112,3 +112,11 @@ Thumbs.db
 !*.ini  # 配置文件
 !*.umap  # 地图文件
 !*.uasset  # 资源文件
+
+# 忽略 UE5 的 Saved 文件夹（缓存/日志/临时文件）
+Saved/
+
+# 可选：同时忽略其他无需追踪的 UE5 文件夹
+Intermediate/
+DerivedDataCache/
+Binaries/
