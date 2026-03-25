@@ -120,7 +120,4 @@ Saved/
 Intermediate/
 DerivedDataCache/
 Binaries/
-aa/Intermediate/ReimportCache/3688439234.bin
-aa/Saved/AutoScreenshot.png
-aa/Intermediate/ReimportCache/3688439234.bin
-/aa/Saved
+*.pth
