@@ -38,63 +38,65 @@
 *.out
 *.app
 *.ipa
-# 引擎生成项目文件（保留手动配置的 .uproject）
+# 引擎生成项目文件
 *.xcodeproj
 *.xcworkspace
 
 # ==============================================
-# UE 引擎核心忽略目录（保留 Content/ 核心资源）
+# UE5 核心忽略目录（白名单保护关键目录）
 # ==============================================
-# 二进制文件目录
-Binaries/*
-Plugins/**/Binaries/*
-# 构建目录（保留 PakBlacklist 配置）
+# 二进制文件
+Binaries/
+Plugins/**/Binaries/
+
+# 构建目录（仅保留 Pak 黑名单与图标）
 Build/*
 !Build/*/
 !Build/*/PakBlacklist*.txt
 !Build/**/*.ico
-# 配置缓存目录
-Saved/*
-!Saved/Config/  # 保留配置文件目录（如需忽略特定配置可单独添加）
-# 中间编译目录
-Intermediate/*
-Plugins/**/Intermediate/*
-!Intermediate/Config/  # 保留中间配置目录
-# 缓存目录
-DerivedDataCache/*
+
+# 缓存与中间文件
+DerivedDataCache/
+Intermediate/
+Plugins/**/Intermediate/
+!Intermediate/Config/
+
+# 运行时缓存/日志/截图
+Saved/
+Plugins/**/Saved/
+!Saved/Config/
+
+# 平台相关文件
+/Platforms/
 
 # ==============================================
-# UE 资源与缓存文件
+# UE5 资源与自动生成文件
 # ==============================================
-# 预编译资源（保留原始资源，忽略编译产物）
+# 源资源编译产物（保留原始资源文件）
 SourceArt/**/*.png
 SourceArt/**/*.tga
+
 # 地图构建数据
 *_BuiltData.uasset
-# 资源备份文件
+
+# 资源备份
 *.uasset.orig
 *.uexp.orig
 *.umap.orig
-# 引擎生成文件
-*.manifest
-*.modules
-*.compiled
+
+# 引擎自动生成代码
 *.generated.h
 *.generated.cpp
-# 着色器自动生成文件
+*.modules
+*.manifest
+*.compiled
+
+# 着色器自动生成
 Intermediate/ShaderAutogen/
 *.ush
 
 # ==============================================
-# 平台特定文件
-# ==============================================
-/Platforms/
-/Plugins/*/Saved/
-/Plugins/*/Intermediate/
-/Plugins/*/Binaries/
-
-# ==============================================
-# 临时文件与系统文件
+# 系统与临时文件
 # ==============================================
 .DS_Store
 Thumbs.db
@@ -102,25 +104,13 @@ Thumbs.db
 *.ini.backup
 
 # ==============================================
-# 保留的核心文件（明确不忽略）
+# 强制保留：UE5 项目核心文件（白名单）
 # ==============================================
-!*.uproject  # 项目描述文件（核心必留）
-!Content/  # 核心资源目录（所有 .uasset/.umap 资源）
-!Config/  # 配置文件目录
-!Source/  # 源代码目录（如存在）
-!Plugins/  # 插件目录（保留插件核心文件，忽略编译产物）
-!*.ini  # 配置文件
-!*.umap  # 地图文件
-!*.uasset  # 资源文件
-
-# 忽略 UE5 的 Saved 文件夹（缓存/日志/临时文件）
-Saved/
-
-# 可选：同时忽略其他无需追踪的 UE5 文件夹
-Intermediate/
-DerivedDataCache/
-Binaries/
-aa/Intermediate/ReimportCache/3688439234.bin
-aa/Saved/AutoScreenshot.png
-aa/Intermediate/ReimportCache/3688439234.bin
-/aa/Saved
+!*.uproject
+!Content/
+!Config/
+!Source/
+!Plugins/
+!*.ini
+!*.uasset
+!*.umap
