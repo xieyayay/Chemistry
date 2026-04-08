@@ -37,6 +37,23 @@
 				"Linux",
 				"Android"
 			]
+		},
+		{
+			"Name": "RuntimeSvgSystem",
+			"Enabled": true
+		},
+		{
+			"Name": "SVGImporter",
+			"Enabled": true
+		},
+		{
+			"Name": "Avalanche",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Linux",
+				"Mac"
+			]
 		}
 	]
 }
