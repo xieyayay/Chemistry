@@ -40,20 +40,11 @@
 		},
 		{
 			"Name": "RuntimeSvgSystem",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "SVGImporter",
 			"Enabled": true
-		},
-		{
-			"Name": "Avalanche",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Linux",
-				"Mac"
-			]
 		}
 	]
 }
