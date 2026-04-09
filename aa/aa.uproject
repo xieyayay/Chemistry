@@ -16,10 +16,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "VaRest",
-			"Enabled": true
-		},
-		{
 			"Name": "RigLogic",
 			"Enabled": true
 		},
@@ -44,6 +40,14 @@
 		},
 		{
 			"Name": "SVGImporter",
+			"Enabled": true
+		},
+		{
+			"Name": "VaRest",
+			"Enabled": true
+		},
+		{
+			"Name": "HairStrands",
 			"Enabled": true
 		}
 	]
