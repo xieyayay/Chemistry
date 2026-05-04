@@ -57,6 +57,11 @@
 		{
 			"Name": "TextToSpeech",
 			"Enabled": true
+		},
+		{
+			"Name": "ThumbnailGenerator",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/43c213569ac94841b37d8bed1ab81ee5"
 		}
 	]
 }
