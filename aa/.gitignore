@@ -1,0 +1,35 @@
+# Unreal Engine
+Saved/
+Intermediate/
+DerivedDataCache/
+Build/
+Binaries/
+*.sln
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+*.user
+*.userprefs
+Uproject.saved
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
