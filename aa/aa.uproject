@@ -66,6 +66,11 @@
 		{
 			"Name": "ElectraPlayer",
 			"Enabled": true
+		},
+		{
+			"Name": "EasyCsv",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/b25b855096e74d088d7553ccbe4072f2"
 		}
 	]
 }
