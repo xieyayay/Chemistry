@@ -71,6 +71,11 @@
 			"Name": "EasyCsv",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/b25b855096e74d088d7553ccbe4072f2"
+		},
+		{
+			"Name": "EasyBatchRenamer",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/Fab/product/9eff1d0d-981b-4bfd-a324-2c1d926096e2"
 		}
 	]
 }
