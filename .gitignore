@@ -125,3 +125,6 @@ aa/Content/Start.umap
 aa/Content/Start.uexp
 aa/Content/Start.umap
 aa/Content/Start.umap
+
+# 忽略我本地插件
+Plugins/

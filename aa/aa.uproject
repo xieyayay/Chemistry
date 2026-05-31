@@ -36,7 +36,7 @@
 		},
 		{
 			"Name": "RuntimeSvgSystem",
-			"Enabled": false
+			"Enabled": true
 		},
 		{
 			"Name": "SVGImporter",
@@ -60,7 +60,7 @@
 		},
 		{
 			"Name": "ThumbnailGenerator",
-			"Enabled": false,
+			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/43c213569ac94841b37d8bed1ab81ee5"
 		},
 		{
@@ -74,8 +74,24 @@
 		},
 		{
 			"Name": "EasyBatchRenamer",
-			"Enabled": false,
+			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/Fab/product/9eff1d0d-981b-4bfd-a324-2c1d926096e2"
+		},
+		{
+			"Name": "EasyBookmarkInBlueprint",
+			"Enabled": true
+		},
+		{
+			"Name": "ActorTeleportTool",
+			"Enabled": true
+		},
+		{
+			"Name": "EasyBookmarkInFolder",
+			"Enabled": true
+		},
+		{
+			"Name": "EasyBookmarkInAssets",
+			"Enabled": true
 		}
 	]
 }
