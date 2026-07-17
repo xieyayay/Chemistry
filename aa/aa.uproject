@@ -36,7 +36,7 @@
 		},
 		{
 			"Name": "RuntimeSvgSystem",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "SVGImporter",
@@ -60,7 +60,7 @@
 		},
 		{
 			"Name": "ThumbnailGenerator",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/43c213569ac94841b37d8bed1ab81ee5"
 		},
 		{
@@ -74,7 +74,7 @@
 		},
 		{
 			"Name": "EasyBatchRenamer",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/Fab/product/9eff1d0d-981b-4bfd-a324-2c1d926096e2"
 		}
 	]
