@@ -1,0 +1,40 @@
+site_name: 化学实验教学平台 · 技术文档
+site_description: UE5.4 化学实验模拟项目技术总结
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - 首页: index.md
+  - 快速入门:
+    - 项目概览: getting-started/project-overview.md
+    - 技术栈: getting-started/tech-stack.md
+  - 关卡序列动画:
+    - Level Sequence: animation/level-sequence.md
+  - UI & Widget:
+    - Widget 系统概述: ui/widget-overview.md
+    - UI 动画: ui/widget-animation.md
+    - 任务系统: ui/task-system.md
+  - 蓝图架构:
+    - GameMode 与通信: blueprints/game-mode.md
+    - 常用蓝图模式: blueprints/common-patterns.md
+  - 系统模块:
+    - AI 对话系统: systems/ai-dialog.md
+    - 关卡流式加载: systems/level-streaming.md
+  - 资源规范:
+    - 材质系统: assets/materials.md
+    - 模型资源: assets/models.md
+  - 第三方插件:
+    - 插件说明: plugins/third-party.md
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - admonition
+  - toc:
+      permalink: true
