@@ -27,15 +27,12 @@ Open Level(关卡名)
 关卡切换时会短暂黑屏或显示加载动画，相关文件在：
 
 ```
-Content/JiaZai_ui/
-├── WBP_F.uasset         ← 漏斗动画
-├── WBP_HGX.uasset       ← 化学仪器动画
-├── WBP_SYG.uasset       ← 实验仪器动画
-├── WBP_ZYJ.uasset       ← 蒸馏仪器动画
-└── S_ExperimentRecord.uasset  ← 实验记录结构体
+Content/UI/
+├── WBP_jiazai         
+├── WBP_jiazai_menu       
 ```
 
 ## 关卡切换时注意
 
-- **GameInstance** 里存的数据不会丢（全局变量、玩家信息放这里）
+- **GameInstance（游戏实例）** 里存的数据不会丢（全局变量、玩家信息放这里）
 - **其他 Actor 会被销毁**，切回来需要重新初始化

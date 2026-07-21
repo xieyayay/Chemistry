@@ -85,7 +85,7 @@
 ---
 
 #### 调用方式一：遍历所有实现了接口的 Actor
-
+连接：https://www.bilibili.com/video/BV14hJ9z8EvQ/?spm_id_from=333.1387.favlist.content.click&vd_source=b8f35d6b8b01aaa29ccd685ef5fd7b18  
 适合"找到场景里所有能交互的东西，挨个通知"。
 
 ```blueprint
@@ -96,7 +96,7 @@
 ---
 
 #### 调用方式二：直接对某个 Actor 调接口事件
-
+连接：https://www.bilibili.com/video/BV1YVMizfEP5/?spm_id_from=333.1387.favlist.content.click&vd_source=b8f35d6b8b01aaa29ccd685ef5fd7b18  
 你已经拿到了一个具体的 Actor，不管它是什么类型，直接让它干活。不用写一堆类型转换。
 
 **例子**：角色按 E 键，跟面前的物体交互。场景里有门（开门）、吊灯（开关灯）、墙（升降）。
