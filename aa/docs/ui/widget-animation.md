@@ -41,38 +41,12 @@ Content/main_UI/RenWu_UI/WBP_TaskPanel2.uasset
 
 打开这个文件 → 左下角动画面板，可以看到实际项目里是怎么用的。
 
----
-
-## 本页导航
-
-- [常用轨道](#常用轨道)
-- [细节面板加关键帧](#进阶在细节面板直接加关键帧)
-- [案例参考](#案例参考)
-
----
-
 ## 蓝图调用动画
 
-```blueprint
-// 播放
-PlayAnimation(动画名)
+blueprint  
+![](../images/image4.png)  
+![](../images/image5.png)  
+![](../images/image6.png)  
 
-// 反向播放（退场）
-PlayAnimationReverse(动画名)
 
-// 播完做下一步
-PlayAnimation(动画名) → OnAnimationFinished → 打开面板 / 切换页面
-```
 
-## 缓动
-
-在时间轴上选中关键帧 → 右键 → **缓动**，选一个曲线：
-
-| 缓动 | 感觉 |
-|------|------|
-| Linear | 匀速 |
-| Cubic Out | 快→慢，常用 |
-| Cubic In | 慢→快 |
-| Elastic Out | 弹一下停住 |
-
-> 一般面板滑入选 **Cubic Out**，不会显得突兀。

@@ -12,12 +12,11 @@
 | [关卡序列动画](animation/level-sequence.md) | Sequencer 制作、蓝图交互、步骤跳转 |
 | [Widget UI](ui/widget-overview.md) | UMG 控件、数据绑定、事件处理 |
 | [UI 动画](ui/widget-animation.md) | Widget 动效、入场退场、缓动 |
-| [蓝图架构](blueprints/game-mode.md) | GameInstance/GameMode、蓝图通信 |
-| [蓝图模式](blueprints/common-patterns.md) | 实用代码片段、常见写法 |
+| [蓝图笔记](blueprints/blueprint-notes.md) | 蓝图通信、命名规范 |
 | [AI 对话](systems/ai-dialog.md) | API 接入、对话面板、TTS |
+| [任务系统](systems/task-system.md) | DataTable 驱动、步骤推进 |
 | [关卡加载](systems/level-streaming.md) | 流式加载、加载界面 |
-| [材质](assets/materials.md) | 材质系统、实例化、VFX |
-| [模型](assets/models.md) | 模型导入、命名规范、碰撞 |
+| [模型](assets/models.md) | 命名规范、碰撞、常见问题 |
 | [插件](plugins/third-party.md) | 第三方插件清单与用法 |
 
 <!--
