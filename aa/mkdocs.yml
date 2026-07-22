@@ -40,6 +40,7 @@ nav:
       - UI 动画: ui/widget-animation.md
   - 蓝图笔记:
       - 通信与命名: blueprints/blueprint-notes.md
+      - 可复用蓝图: blueprints/reusable-blueprints.md
   - 系统模块:
       - AI 对话系统: systems/ai-dialog.md
       - 任务系统: systems/task-system.md
