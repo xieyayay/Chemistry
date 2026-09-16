@@ -127,7 +127,23 @@ mkdocs build --clean  # 构建到 site/
   换成了 `pymdownx.slugs.slugify`。MkDocs 默认实现会把非 ASCII 字符全部丢掉，
   中文标题的锚点会退化成 `#_1` `#_2`。
 
-### `本地预览.cmd` — 改之前先读这段
+### 两个构建产物，别搞混
+
+| 配置 | 产物 | 链接形式 | 用途 |
+| --- | --- | --- | --- |
+| `mkdocs.yml` | `site/` | 目录式 `systems/ai-task/` | **部署到服务器**，只有 HTTP 服务器能映射到 index.html |
+| `mkdocs.offline.yml` | `site-offline/` | 文件式 `systems/ai-task.html` | **发给人看 / 当面演示**，双击就能打开 |
+
+`mkdocs.offline.yml` 用 `INHERIT: mkdocs.yml` 继承主配置，只覆盖
+`use_directory_urls` 和 `site_dir`。两个配置共用同一份 `docs/` 内容，改内容只需要
+改一处；**别往 `site-offline/` 里放独有的东西**，它随时会被重新生成。
+
+`site-offline/` 已在 `.gitignore` 里，不进版本控制。
+
+这套安排是为了绕开一个坑：MkDocs 默认生成目录式链接，`file://` 协议无法把
+`systems/ai-task/` 映射到 `systems/ai-task/index.html`，双击只会看到文件夹列表。
+
+### `本地预览.cmd` / `生成演示版.cmd` — 改之前先读这段
 
 给不装工具的同事双击用的本地预览脚本。两条约束，破坏任何一条这个脚本就废了：
 
