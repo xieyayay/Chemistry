@@ -33,3 +33,6 @@ __pycache__/
 *.pyo
 .env
 venv/
+
+# 打包发送站点用的临时压缩包，不属于仓库内容
+site.zip
