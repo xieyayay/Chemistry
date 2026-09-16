@@ -33,8 +33,3 @@ __pycache__/
 *.pyo
 .env
 venv/
-
-# 技术文档站的构建产物
-# site/          正式版，用于部署到服务器（目前仍纳入版本控制，见 DEPLOY.md 第七节）
-# site-offline/  离线演示版，仅供当面演示或打包发送，不回传仓库
-site-offline/

@@ -1068,17 +1068,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#想发给别人看双击-生成演示版cmd" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        想发给别人看：双击 生成演示版.cmd
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#想看实时刷新mkdocs-serve" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1130,36 +1119,6 @@
 浏览器直接打开文件时不会 —— 你点导航只会看到一个文件夹列表。</p>
 <p><code>本地预览.cmd</code> 就是起了个小服务器绕开这个问题，用的是 Python 自带的功能，
 不需要额外装东西。</p>
-</div>
-<h2 id="想发给别人看双击-生成演示版cmd">想发给别人看：双击 <code>生成演示版.cmd</code><a class="headerlink" href="#想发给别人看双击-生成演示版cmd" title="Permanent link">&para;</a></h2>
-<p>如果要<strong>把网站发给别人</strong>（比如发给服务器主人先看看效果），用这个。</p>
-<p>它会生成一个 <code>site-offline\</code> 文件夹，里面的链接是「文件式」的，
-<strong>双击任何一个页面都能正常打开和跳转</strong>，不需要装任何东西，也不需要起服务器。
-整个文件夹压缩一下就能发出去。</p>
-<div class="admonition warning">
-<p class="admonition-title">别把这两个文件夹搞混</p>
-<table>
-<thead>
-<tr>
-<th>文件夹</th>
-<th>用途</th>
-<th>能不能双击看</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>site\</code></td>
-<td><strong>放到服务器上用</strong>，链接是目录式（<code>/systems/ai-task/</code>）</td>
-<td>❌ 双击只能看到文件夹列表</td>
-</tr>
-<tr>
-<td><code>site-offline\</code></td>
-<td><strong>发给人看 / 当面演示</strong>，链接是文件式（<code>/systems/ai-task.html</code>）</td>
-<td>✅ 双击就能看</td>
-</tr>
-</tbody>
-</table>
-<p>两个文件夹内容一样，只有链接形式不同。<strong>部署到服务器请用 <code>site\</code>。</strong></p>
 </div>
 <h2 id="想看实时刷新mkdocs-serve">想看实时刷新：<code>mkdocs serve</code><a class="headerlink" href="#想看实时刷新mkdocs-serve" title="Permanent link">&para;</a></h2>
 <p>改文档时想让网页自动跟着变，用这个。打开终端（Win+R → 输入 <code>cmd</code> → 回车），
