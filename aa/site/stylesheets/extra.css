@@ -17,7 +17,8 @@
 :root {
   /* --- 字体 -----------------------------------------------------------------
      Material 默认会去 Google Fonts 拉 Roboto，已在 mkdocs.yml 用 `font: false`
-     关掉。Inter / JetBrains Mono 由 system.css 的 @import 负责。
+     关掉。Inter / JetBrains Mono 由 stylesheets/fonts.css 自托管提供
+     （源文件见 docs/fonts/，生成脚本 tools/fetch_fonts.py）。
      这里只是把 Material 的字体变量接到设计系统的字体栈上。
      后补的中文族是「缺字回落」——不替换 Inter 的拉丁字形，只在 Inter 没有
      该字形时接管，避免中文落到 Arial 上发虚。 */

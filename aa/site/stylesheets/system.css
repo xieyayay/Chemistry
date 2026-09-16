@@ -2,10 +2,16 @@
    Aether — Frosted Glass Design System
    Light, Apple-adjacent material language with pill geometry and a
    charcoal accent.
+
+   ⚠ 本项目对原始文件做过一处改动（其余内容与指导包逐字节一致）：
+     删掉了原本指向 fonts.googleapis.com 的两行 @import，改为引用同目录下的
+     fonts.css（自托管字体）。原始版本见 bad-dodo-83-64e996bc/css/system.css。
+
+     原因：googleapis.com 在国内不可达，字体不仅加载不到，CSS @import 还会
+     阻塞渲染，导致首屏白屏。自托管后站点 100% 自包含。
    ========================================================================== */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+/* 字体通过 stylesheets/fonts.css 自托管，见 mkdocs.yml 的 extra_css */
 
 /* ----- Tokens ------------------------------------------------------------ */
 

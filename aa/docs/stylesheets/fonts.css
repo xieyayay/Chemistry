@@ -1,0 +1,57 @@
+/* ==========================================================================
+   自托管字体 —— 由 tools/fetch_fonts.py 自动生成，请勿手工编辑
+   --------------------------------------------------------------------------
+   源文件：docs/fonts/*.woff2（Inter 与 JetBrains Mono，SIL Open Font License 1.1）
+   为什么不用 Google Fonts：googleapis.com 在国内不可达，而且 CSS @import
+   会阻塞渲染。自托管之后站点 100% 自包含，内网断网都能正常显示。
+   只取了 latin 子集，中文字形由系统字体（苹方 / 微软雅黑）兜底。
+   改动字体后重新生成：python tools/fetch_fonts.py
+   ========================================================================== */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/inter-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/inter-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/inter-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/inter-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono-500.woff2") format("woff2");
+}

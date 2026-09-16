@@ -14,9 +14,11 @@ MkDocs 技术文档站（`docs/` → 构建到 `site/`）。下面只写「不�
 | --- | --- | --- |
 | `DESIGN.md` | 设计系统规范（令牌、组件、Do/Don't、无障碍） | 只读参考 |
 | `bad-dodo-83-64e996bc/` | 原始指导包：`css/system.css`、`html/preview.html`（视觉参照）、`metadata.json` | 只读，不修改 |
-| `docs/stylesheets/system.css` | 设计系统本体，站点实际加载的那一份。与指导包逐字节一致 | **不要就地改**，要改先改指导包再同步 |
+| `docs/stylesheets/system.css` | 设计系统本体，站点实际加载的那一份 | 只做过一处改动（见下），其余**不要就地改**，要改先改指导包再同步 |
 | `docs/stylesheets/extra.css` | MkDocs Material 适配层，本项目自己的样式都写在这里 | 可以改 |
 | `docs/stylesheets/icons.css` | 图标工具类，由脚本生成 | **勿手工编辑**，见下文 |
+| `docs/stylesheets/fonts.css` | 自托管字体的 @font-face，由脚本生成 | **勿手工编辑**，见下文 |
+| `docs/fonts/*.woff2` | 字体文件本体（6 个，250KB） | 由脚本下载，不要手工替换 |
 | `docs/design-system.md` | 「设计系统」页面，所有组件的实际渲染效果 | 可以改；改样式后顺手核对这里 |
 
 改样式的顺序：读 `DESIGN.md` → 查 `docs/stylesheets/system.css` 有哪些令牌 →
@@ -72,6 +74,21 @@ MkDocs 技术文档站（`docs/` → 构建到 `site/`）。下面只写「不�
 - **Material 有一批选择器带 `[dir=ltr]` / `[dir=rtl]` 前缀**，特异度是 0,2,1，
   比裸的 `.md-typeset xxx`（0,1,1）高。引用块的左边框就吃过这个亏：不写成
   `[dir] .md-typeset blockquote`，8px 的灰色竖条会一直留在那里。
+
+### 字体必须自托管
+
+`docs/fonts/*.woff2` + `docs/stylesheets/fonts.css`，由 `tools/fetch_fonts.py` 生成。
+
+**不要改回 Google Fonts。** 原始 `system.css` 是用 `@import` 从 fonts.googleapis.com
+拉 Inter 和 JetBrains Mono 的，这在两个方面不可接受：googleapis.com 在国内不可达，
+字体加载不到；而且 CSS `@import` 是**阻塞渲染**的，拉不到时会白屏好几秒。
+自托管之后站点 100% 自包含，内网、断网都能正常显示。
+
+为此 `docs/stylesheets/system.css` 与指导包**不再是逐字节一致**——只删了那两行
+`@import`，文件头有注释说明，其余内容未动。原始版本仍在
+`bad-dodo-83-64e996bc/css/system.css`。这是唯一允许的偏离。
+
+只下了 latin 子集：中文由系统字体（苹方 / 微软雅黑）兜底，不需要 CJK 字体文件。
 
 ### 图片放大
 

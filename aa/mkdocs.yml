@@ -51,7 +51,8 @@ theme:
 # extra_css 是 MkDocs 的顶层配置项（不能写在 theme: 下面，否则会被忽略）。
 # 顺序即层叠顺序：先加载设计系统本体，再加载适配层。
 extra_css:
-  - stylesheets/system.css   # Aether 设计系统本体（与 bad-dodo-83-64e996bc/css/system.css 逐字节一致，请勿就地修改）
+  - stylesheets/fonts.css    # 自托管字体，由 tools/fetch_fonts.py 生成，勿手工编辑
+  - stylesheets/system.css   # Aether 设计系统本体（仅摘除了指向 Google Fonts 的 @import，见文件头注释）
   - stylesheets/extra.css    # MkDocs Material 适配层
   - stylesheets/icons.css    # 图标工具类，由 tools/build_icons_css.py 生成，勿手工编辑
 
