@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, initial-scale=1" />
+    <title>Aether — Cover</title>
+    <link rel="stylesheet" href="../css/system.css" />
+    <style>
+      html, body {
+        width: 1200px;
+        height: 800px;
+        overflow: hidden;
+      }
+      body {
+        background:
+          radial-gradient(620px 420px at 18% 14%, rgba(201, 214, 255, 0.85) 0%, transparent 62%),
+          radial-gradient(580px 380px at 88% 22%, rgba(227, 211, 255, 0.7) 0%, transparent 64%),
+          radial-gradient(700px 460px at 50% 110%, rgba(216, 228, 255, 0.85) 0%, transparent 60%),
+          var(--color-bg);
+        background-attachment: scroll;
+      }
+
+      .artboard {
+        position: relative;
+        width: 1200px;
+        height: 800px;
+        padding: 56px 64px;
+        box-sizing: border-box;
+      }
+
+      /* Floating brand chip — top-left */
+      .brandbar {
+        position: absolute;
+        top: 56px;
+        left: 64px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 18px 8px 8px;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+      }
+      .brandbar .mark {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-full);
+        background: var(--color-ink);
+        color: var(--color-ink-inverse);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      }
+      .brandbar .mark .icon { width: 16px; height: 16px; stroke-width: 2; }
+      .brandbar .name {
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: var(--tracking-heading);
+        color: var(--color-ink);
+      }
+      .brandbar .ver {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--color-ink-tertiary);
+        padding-left: 10px;
+        margin-left: 6px;
+        border-left: 1px solid var(--color-hairline);
+      }
+
+      /* Version label — top right */
+      .stamp {
+        position: absolute;
+        top: 64px;
+        right: 64px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--color-ink-tertiary);
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .stamp .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-success);
+        box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.18);
+      }
+
+      /* Display block — left column */
+      .display-block {
+        position: absolute;
+        top: 156px;
+        left: 64px;
+        right: 540px;
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--color-ink-tertiary);
+        margin-bottom: 22px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 18px;
+        height: 1px;
+        background: var(--color-hairline-strong);
+      }
+
+      .wordmark {
+        font-size: 148px;
+        line-height: 0.92;
+        letter-spacing: -0.05em;
+        font-weight: 600;
+        margin: 0;
+        color: var(--color-ink);
+        background: linear-gradient(
+          135deg,
+          var(--color-ink) 0%,
+          #3a3a40 45%,
+          #0a84ff 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .tagline {
+        margin: 24px 0 0;
+        font-size: 19px;
+        line-height: 1.45;
+        color: var(--color-ink-secondary);
+        max-width: 30ch;
+        letter-spacing: -0.005em;
+      }
+
+      /* Palette strip */
+      .palette {
+        position: absolute;
+        left: 64px;
+        bottom: 84px;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+      .swatch {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+        border: 1px solid var(--color-hairline);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+      }
+      .swatch .label {
+        position: absolute;
+        left: -8px;
+        right: -8px;
+        bottom: -22px;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        color: var(--color-ink-tertiary);
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .swatch.pearl { background: var(--color-bg); }
+      .swatch.glass {
+        background: rgba(255, 255, 255, 0.65);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+      }
+      .swatch.graphite { background: var(--color-ink); }
+      .swatch.accent { background: var(--color-accent); }
+      .swatch.aurora {
+        background: linear-gradient(135deg, var(--color-aurora-a), var(--color-aurora-b));
+      }
+
+      /* Right column — specimen tray */
+      .tray {
+        position: absolute;
+        top: 132px;
+        right: 64px;
+        width: 460px;
+        height: 580px;
+      }
+
+      /* Signature dock card */
+      .signature {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 22px;
+        background: var(--color-surface-raised);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: 28px;
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-floating);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        overflow: hidden;
+      }
+      .signature::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.55) 0%,
+          rgba(255, 255, 255, 0) 22%,
+          rgba(255, 255, 255, 0) 78%,
+          rgba(255, 255, 255, 0.32) 100%
+        );
+        mix-blend-mode: screen;
+      }
+      .signature-head {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .signature-head .label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--color-ink-tertiary);
+      }
+      .signature-head .pip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.06em;
+        color: var(--color-ink-tertiary);
+      }
+      .signature-head .pip i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        display: inline-block;
+      }
+
+      .mini-dock {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+      }
+      .mini-dock .mini-search {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        height: 38px;
+        padding: 0 14px;
+        background: rgba(255, 255, 255, 0.55);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: inset 0 1px 0 var(--color-bevel-light);
+        color: var(--color-ink-tertiary);
+        font-size: 12px;
+      }
+      .mini-dock .mini-search .icon { width: 14px; height: 14px; }
+      .mini-chip {
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-full);
+        background: var(--color-surface-glass);
+        border: 1px solid var(--color-hairline);
+        box-shadow: var(--glass-bevel-inset);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-ink);
+      }
+      .mini-chip .icon { width: 16px; height: 16px; stroke-width: 1.75; }
+      .mini-chip.active {
+        background: var(--color-ink);
+        color: var(--color-ink-inverse);
+        border-color: rgba(15,23,42,0.6);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset,
+          0 6px 14px -6px rgba(15,23,42,0.45);
+      }
+
+      .specimen-cta {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 10px 10px 18px;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+      }
+      .specimen-cta .text {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: -0.005em;
+        color: var(--color-ink);
+      }
+      .specimen-cta .chip-lg {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-full);
+        background: var(--color-ink);
+        color: var(--color-ink-inverse);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      }
+      .specimen-cta .chip-lg .icon { width: 16px; height: 16px; }
+
+      .row-2 {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        gap: 12px;
+      }
+
+      .mini-tabs {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        padding: 4px;
+        background: var(--color-surface-glass);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset);
+      }
+      .mini-tabs .mtab {
+        height: 30px;
+        padding: 0 12px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--color-ink-tertiary);
+        background: transparent;
+        border: none;
+        border-radius: var(--radius-full);
+      }
+      .mini-tabs .mtab.active {
+        color: var(--color-ink-inverse);
+        background: var(--color-ink);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset,
+          0 4px 10px -4px rgba(15,23,42,0.4);
+      }
+
+      .mini-toggle {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        background: var(--color-surface-glass);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset);
+        font-size: 12px;
+        color: var(--color-ink-secondary);
+      }
+      .mini-toggle .sw {
+        position: relative;
+        width: 32px;
+        height: 18px;
+        background: var(--color-accent);
+        border-radius: var(--radius-full);
+        box-shadow: inset 0 1px 2px rgba(15,23,42,0.12);
+      }
+      .mini-toggle .sw::after {
+        content: "";
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 1px 2px rgba(15,23,42,0.18);
+      }
+
+      /* Specimen card — type */
+      .type-card {
+        position: absolute;
+        top: 320px;
+        left: 0;
+        right: 0;
+        padding: 22px;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: 24px;
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-raised);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow: hidden;
+      }
+      .type-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.42) 0%,
+          rgba(255, 255, 255, 0) 24%,
+          rgba(255, 255, 255, 0) 76%,
+          rgba(255, 255, 255, 0.24) 100%
+        );
+        mix-blend-mode: screen;
+      }
+      .type-card .micro {
+        position: relative;
+        z-index: 2;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--color-ink-tertiary);
+      }
+      .type-card .big {
+        position: relative;
+        z-index: 2;
+        font-size: 50px;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        font-weight: 600;
+        color: var(--color-ink);
+        margin: 0;
+      }
+      .type-card .small {
+        position: relative;
+        z-index: 2;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--color-ink-tertiary);
+        display: flex;
+        gap: 14px;
+      }
+      .type-card .small span:first-child { color: var(--color-ink-secondary); }
+
+      /* Tray bottom row — tokens */
+      .token-row {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 12px;
+      }
+      .token {
+        position: relative;
+        padding: 14px 16px;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: 18px;
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        overflow: hidden;
+      }
+      .token::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0) 28%,
+          rgba(255, 255, 255, 0) 72%,
+          rgba(255, 255, 255, 0.22) 100%
+        );
+        mix-blend-mode: screen;
+      }
+      .token .k {
+        position: relative;
+        z-index: 2;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-ink-tertiary);
+      }
+      .token .v {
+        position: relative;
+        z-index: 2;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--color-ink);
+        letter-spacing: -0.005em;
+      }
+      .token .sub {
+        position: relative;
+        z-index: 2;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-ink-secondary);
+      }
+
+      /* Bottom-right corner: kbd hint */
+      .corner-hint {
+        position: absolute;
+        bottom: 64px;
+        right: 64px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--color-ink-tertiary);
+      }
+      .corner-hint .kbd {
+        padding: 4px 8px;
+        background: rgba(15, 23, 42, 0.04);
+        border: 1px solid var(--color-hairline);
+        border-radius: 6px;
+        color: var(--color-ink-secondary);
+      }
+
+      /* Bottom info row — under wordmark, above palette */
+      .meta-row {
+        position: absolute;
+        left: 64px;
+        bottom: 164px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .pill-meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        background: var(--color-surface-glass);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset);
+        font-size: 12px;
+        color: var(--color-ink-secondary);
+        font-weight: 500;
+      }
+      .pill-meta .icon { width: 13px; height: 13px; stroke-width: 1.75; color: var(--color-ink); }
+    </style>
+  </head>
+  <body>
+    <main class="artboard">
+      <!-- Brand bar -->
+      <div class="brandbar">
+        <span class="mark"><i data-lucide="aperture"></i></span>
+        <span class="name">Aether</span>
+        <span class="ver">DESIGN SYSTEM · LIGHT · v1.0</span>
+      </div>
+
+      <span class="stamp">
+        <span class="dot"></span>
+        Material specimen · 2026
+      </span>
+
+      <!-- Display block (left) -->
+      <section class="display-block">
+        <div class="eyebrow">Frosted glass · Apple-feel · Pill</div>
+        <h1 class="wordmark">Aether</h1>
+        <p class="tagline">
+          A calm, optical material language. Translucent pill panes float
+          over a pearl backdrop, lit by inset bevels and a charcoal anchor.
+        </p>
+      </section>
+
+      <!-- Meta row -->
+      <div class="meta-row">
+        <span class="pill-meta">
+          <i data-lucide="circle-dashed" class="icon"></i>
+          Pill geometry
+        </span>
+        <span class="pill-meta">
+          <i data-lucide="layers" class="icon"></i>
+          3-tier glass
+        </span>
+        <span class="pill-meta">
+          <i data-lucide="sparkles" class="icon"></i>
+          Aurora wash
+        </span>
+        <span class="pill-meta">
+          <i data-lucide="type" class="icon"></i>
+          Inter · JetBrains Mono
+        </span>
+      </div>
+
+      <!-- Palette strip (bottom-left) -->
+      <div class="palette">
+        <div class="swatch pearl"><span class="label">PEARL</span></div>
+        <div class="swatch glass"><span class="label">GLASS</span></div>
+        <div class="swatch graphite"><span class="label">GRAPHITE</span></div>
+        <div class="swatch accent"><span class="label">ACCENT</span></div>
+        <div class="swatch aurora"><span class="label">AURORA</span></div>
+      </div>
+
+      <!-- Right specimen tray -->
+      <section class="tray">
+        <!-- Signature dock card -->
+        <article class="signature">
+          <header class="signature-head">
+            <span class="label">Signature · command dock</span>
+            <span class="pip"><i></i> LIVE</span>
+          </header>
+
+          <div class="mini-dock">
+            <span class="mini-search">
+              <i data-lucide="search" class="icon"></i>
+              <span>Search…</span>
+            </span>
+            <span class="mini-chip"><i data-lucide="inbox" class="icon"></i></span>
+            <span class="mini-chip active"><i data-lucide="layers" class="icon"></i></span>
+            <span class="mini-chip"><i data-lucide="calendar" class="icon"></i></span>
+          </div>
+
+          <div class="specimen-cta">
+            <span class="text">Get started</span>
+            <span class="chip-lg"><i data-lucide="arrow-right" class="icon"></i></span>
+          </div>
+
+          <div class="row-2">
+            <div class="mini-tabs">
+              <button class="mtab active">Material</button>
+              <button class="mtab">Tokens</button>
+              <button class="mtab">Code</button>
+            </div>
+            <span class="mini-toggle">
+              <span>Glass</span>
+              <span class="sw"></span>
+            </span>
+          </div>
+        </article>
+
+        <!-- Type card -->
+        <article class="type-card">
+          <span class="micro">Display · Inter 600 · -0.022em</span>
+          <p class="big">Aa Æ 86</p>
+          <div class="small">
+            <span>Inter</span>
+            <span>·</span>
+            <span>48 / 56</span>
+            <span>·</span>
+            <span>JetBrains Mono</span>
+          </div>
+        </article>
+
+        <!-- Token row -->
+        <div class="token-row">
+          <div class="token">
+            <span class="k">Radius</span>
+            <span class="v">9999 px / 24 px</span>
+            <span class="sub">pill · card</span>
+          </div>
+          <div class="token">
+            <span class="k">Blur</span>
+            <span class="v">blur(20) sat(180)</span>
+            <span class="sub">backdrop · glass</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Corner hint -->
+      <span class="corner-hint">
+        Press
+        <span class="kbd">⌘</span>
+        <span class="kbd">K</span>
+        to open the dock
+      </span>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+      }
+    </script>
+  </body>
+</html>

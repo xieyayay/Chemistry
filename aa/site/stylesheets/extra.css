@@ -1,158 +1,1344 @@
-/* === 导航分组标题 — 明显区分 === */
+/* ==========================================================================
+   Aether × MkDocs Material — 适配层
+   --------------------------------------------------------------------------
+   设计系统：DESIGN.md + bad-dodo-83-64e996bc/（Aether，磨砂玻璃材质语言）
+
+   本文件只做一件事：把 MkDocs Material 的组件外壳换成 Aether 的材质语言。
+   令牌（颜色 / 排版 / 间距 / 圆角 / 阴影）全部来自 system.css，本文件不新造
+   颜色，只做「换算」和「映射」两件事。
+
+   阅读顺序：DESIGN.md → docs/stylesheets/system.css → 本文件
+   ========================================================================== */
+
+/* ==========================================================================
+   1. 令牌换算与字体接入
+   ========================================================================== */
+
+:root {
+  /* --- 字体 -----------------------------------------------------------------
+     Material 默认会去 Google Fonts 拉 Roboto，已在 mkdocs.yml 用 `font: false`
+     关掉。Inter / JetBrains Mono 由 system.css 的 @import 负责。
+     这里只是把 Material 的字体变量接到设计系统的字体栈上。
+     后补的中文族是「缺字回落」——不替换 Inter 的拉丁字形，只在 Inter 没有
+     该字形时接管，避免中文落到 Arial 上发虚。 */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", Arial,
+    sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, "Microsoft YaHei",
+    monospace;
+
+  --md-text-font: var(--font-sans);
+  --md-code-font: var(--font-mono);
+
+  /* --- rem 基准换算 ---------------------------------------------------------
+     Aether 的 rem 令牌按 1rem = 16px 设计，而 Material 把根字号设成 125%
+     （1rem = 20px），并在 ≥1600px / ≥2000px 时放大到 137.5% / 150%。
+     不换算的话，设计系统里 24px 的间距在这里会渲染成 30px，整站会「胖一圈」。
+     下面按 1rem = 20px 重新标定，让令牌渲染出 DESIGN.md 里写的真实像素值；
+     超大屏则跟随 Material 一起等比放大（约 +10% / +20%）。 */
+  --space-3xs: 0.1rem; /*   2px */
+  --space-2xs: 0.2rem; /*   4px */
+  --space-xs: 0.4rem; /*   8px */
+  --space-sm: 0.6rem; /*  12px */
+  --space-md: 0.8rem; /*  16px */
+  --space-lg: 1.2rem; /*  24px */
+  --space-xl: 1.6rem; /*  32px */
+  --space-2xl: 2.4rem; /*  48px */
+  --space-3xl: 3.6rem; /*  72px */
+
+  --text-display: 2.4rem; /*  48px */
+  --text-h1: 1.6rem; /*  32px */
+  --text-h2: 1.2rem; /*  24px */
+  --text-body: 0.75rem; /*  15px */
+  --text-label: 0.65rem; /*  13px */
+  --text-micro: 0.55rem; /*  11px */
+
+  /* --- 适配层自用令牌 -------------------------------------------------------
+     下面两个不是设计系统的令牌，而是本适配层为了「页面底色上的淡墨 wash」在
+     明暗两套主题下都能成立而引入的辅助量。前缀用 --aether- 而非 --color-，
+     以免和设计系统的令牌命名空间混淆。 */
+  --aether-wash: rgba(15, 23, 42, 0.04);
+  --aether-wash-strong: rgba(15, 23, 42, 0.07);
+}
+
+/* ==========================================================================
+   2. 亮色（默认）— Aether 令牌 → Material 变量
+   Material 的调色板写在 palette.css 的 [data-md-color-primary=indigo] 一类规则里
+   （特异度 0,1,0）。本文件在它之后加载，同特异度后加载者胜，:root 即可覆盖。
+   ========================================================================== */
+
+:root {
+  /* 文字层级：石墨 / 石板 / 雾 */
+  --md-default-fg-color: var(--color-ink);
+  --md-default-fg-color--light: var(--color-ink-secondary);
+  --md-default-fg-color--lighter: rgba(29, 29, 31, 0.32);
+  --md-default-fg-color--lightest: rgba(29, 29, 31, 0.12);
+
+  /* 背景层级：珍珠底 + 三档白玻璃 */
+  --md-default-bg-color: var(--color-bg);
+  --md-default-bg-color--light: var(--color-surface-glass);
+  --md-default-bg-color--lighter: var(--color-surface-glass-soft);
+  --md-default-bg-color--lightest: rgba(255, 255, 255, 0.22);
+
+  /* 主色：Aether 用炭黑承载主操作，而不是彩色 */
+  --md-primary-fg-color: var(--color-ink);
+  --md-primary-fg-color--light: rgba(29, 29, 31, 0.72);
+  --md-primary-fg-color--dark: #000000;
+  --md-primary-bg-color: var(--color-ink-inverse);
+  --md-primary-bg-color--light: rgba(245, 245, 247, 0.72);
+
+  /* 强调色：系统蓝只用于焦点、链接、开关开启态 */
+  --md-accent-fg-color: var(--color-accent);
+  --md-accent-fg-color--transparent: var(--color-accent-soft);
+  --md-accent-bg-color: #ffffff;
+  --md-accent-bg-color--light: rgba(255, 255, 255, 0.72);
+
+  /* 代码：块面用玻璃，不用灰底 */
+  --md-code-fg-color: var(--color-ink);
+  --md-code-bg-color: var(--color-surface-raised);
+  --md-code-bg-color--light: rgba(255, 255, 255, 0.75);
+  --md-code-bg-color--lighter: rgba(15, 23, 42, 0.05);
+  /* 注：--md-code-hl-* 语法高亮配色保持 Material 原值。高亮色是代码语义色，
+     不是装饰性填充，硬套 Aether 的窄色板会让代码难读。 */
+
+  /* 正文 */
+  --md-typeset-color: var(--color-ink);
+  --md-typeset-a-color: var(--color-accent);
+  --md-typeset-table-color: var(--color-hairline);
+  --md-typeset-table-color--light: rgba(15, 23, 42, 0.035);
+  --md-typeset-kbd-color: rgba(15, 23, 42, 0.04);
+  --md-typeset-kbd-accent-color: #ffffff;
+  --md-typeset-kbd-border-color: var(--color-hairline);
+  --md-typeset-mark-color: rgba(255, 159, 10, 0.28);
+  --md-typeset-del-color: rgba(255, 69, 58, 0.16);
+  --md-typeset-ins-color: rgba(52, 199, 89, 0.18);
+
+  /* 提示框 */
+  --md-admonition-fg-color: var(--color-ink-secondary);
+  --md-admonition-bg-color: var(--color-surface-glass-strong);
+
+  /* 页脚：底色交给 .md-footer 自己铺玻璃 */
+  --md-footer-fg-color: var(--color-ink);
+  --md-footer-fg-color--light: var(--color-ink-secondary);
+  --md-footer-fg-color--lighter: var(--color-ink-tertiary);
+  --md-footer-bg-color: transparent;
+  --md-footer-bg-color--dark: transparent;
+
+  /* 阴影：换成 Aether 的两层体系（内倒角 + 外悬浮） */
+  --md-shadow-z1: var(--glass-bevel-inset), var(--glass-shadow-resting);
+  --md-shadow-z2: var(--glass-bevel-inset), var(--glass-shadow-raised);
+  --md-shadow-z3: var(--glass-bevel-inset), var(--glass-shadow-floating);
+}
+
+/* ==========================================================================
+   3. 暗色 — 对设计系统的扩展（Aether 只定义了亮色）
+   --------------------------------------------------------------------------
+   取值全部来自 Aether 自己的墨色家族（#1d1d1f / #f5f5f7 / #86868b），
+   没有引入任何新色相；强调色仍是同一个 system blue #0a84ff。
+   同时重映射 --color-* 与 --md-* 两层，让 system.css 的组件类在暗色下也成立。
+   ========================================================================== */
+
+[data-md-color-scheme="slate"] {
+  /* 表面 */
+  --color-bg: #16181d;
+  --color-bg-deep: #101216;
+  --color-surface-glass: rgba(255, 255, 255, 0.06);
+  --color-surface-glass-strong: rgba(255, 255, 255, 0.1);
+  --color-surface-glass-soft: rgba(255, 255, 255, 0.04);
+  --color-surface-raised: rgba(255, 255, 255, 0.14);
+
+  /* 墨色：与亮色互为镜像 */
+  --color-ink: #f5f5f7;
+  --color-ink-secondary: #a1a1a6;
+  --color-ink-tertiary: #86868b;
+  --color-ink-inverse: #1d1d1f;
+
+  /* 强调色：色相不变，透明度按暗底重新标定 */
+  --color-accent-soft: rgba(10, 132, 255, 0.22);
+  --color-accent-ring: rgba(10, 132, 255, 0.42);
+  --color-aurora-a: rgba(201, 214, 255, 0.1);
+  --color-aurora-b: rgba(227, 211, 255, 0.08);
+
+  /* 发丝线与倒角 */
+  --color-hairline: rgba(255, 255, 255, 0.1);
+  --color-hairline-strong: rgba(255, 255, 255, 0.18);
+  --color-bevel-light: rgba(255, 255, 255, 0.16);
+  --color-bevel-soft: rgba(255, 255, 255, 0.07);
+  --color-bevel-dark: rgba(0, 0, 0, 0.3);
+
+  --glass-bevel-inset: inset 1.5px 1.5px 0 0 var(--color-bevel-light),
+    inset -1px -1px 0 0 var(--color-bevel-soft),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+  --glass-bevel-pressed: inset 1px 1px 1px 0 rgba(0, 0, 0, 0.35),
+    inset -1px -1px 0 0 var(--color-bevel-soft);
+  --glass-shadow-resting: 0 1px 2px rgba(0, 0, 0, 0.32),
+    0 12px 28px -10px rgba(0, 0, 0, 0.55);
+  --glass-shadow-raised: 0 2px 4px rgba(0, 0, 0, 0.36),
+    0 22px 44px -14px rgba(0, 0, 0, 0.62);
+  --glass-shadow-floating: 0 4px 8px rgba(0, 0, 0, 0.42),
+    0 32px 64px -16px rgba(0, 0, 0, 0.7);
+
+  /* Material 变量同步 */
+  --md-default-bg-color: var(--color-bg);
+  --md-default-bg-color--light: var(--color-surface-glass);
+  --md-default-bg-color--lighter: var(--color-surface-glass-soft);
+  --md-default-bg-color--lightest: rgba(255, 255, 255, 0.05);
+
+  --md-primary-fg-color: var(--color-ink);
+  --md-primary-fg-color--light: rgba(245, 245, 247, 0.72);
+  --md-primary-fg-color--dark: #ffffff;
+  --md-primary-bg-color: var(--color-ink-inverse);
+  --md-primary-bg-color--light: rgba(29, 29, 31, 0.72);
+
+  --md-code-bg-color: var(--color-surface-raised);
+  --md-code-bg-color--light: rgba(255, 255, 255, 0.12);
+  --md-code-bg-color--lighter: rgba(255, 255, 255, 0.08);
+  --md-typeset-table-color--light: rgba(255, 255, 255, 0.04);
+  --md-typeset-kbd-color: rgba(255, 255, 255, 0.07);
+  --md-typeset-kbd-accent-color: rgba(255, 255, 255, 0.12);
+  --md-typeset-mark-color: rgba(255, 159, 10, 0.32);
+
+  --md-admonition-bg-color: var(--color-surface-glass-strong);
+
+  /* 适配层辅助量在暗底上翻转为淡白 wash */
+  --aether-wash: rgba(255, 255, 255, 0.06);
+  --aether-wash-strong: rgba(255, 255, 255, 0.1);
+}
+
+/* system.css 里有几个组件把亮色值写死了（不是令牌），在暗底上会失效。
+   不能改 system.css（它要与指导包保持一致），所以在适配层里逐个修正。 */
+[data-md-color-scheme="slate"] .dock-search {
+  /* 原值 rgba(255,255,255,0.5) 在暗底上变成一块中灰，配 --color-ink-tertiary
+     的文字几乎读不出来 */
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--color-hairline);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: var(--color-ink-secondary);
+}
+
+[data-md-color-scheme="slate"] .switch-track {
+  /* 原值 rgba(15,23,42,0.1) 是暗色叠加，在暗底上等于消失 */
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+[data-md-color-scheme="slate"] .input-kbd {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ==========================================================================
+   4. 页面骨架
+   ========================================================================== */
+
+/* 背景：珍珠底 + 极光晕染由 system.css 的 body 规则提供，
+   这里只把底色重新钉一遍，避免被 Material 的背景色规则盖掉。 */
+body {
+  background-color: var(--color-bg);
+}
+
+/* --- 顶栏 -----------------------------------------------------------------
+   Aether 的材质是「玻璃 + 发丝线 + 倒角」，所以顶栏铺玻璃而不是炭黑；
+   炭黑在本系统里只留给主操作和选中态。
+   高度保持 Material 的 2.4rem：侧边栏吸顶偏移和「回到顶部」的定位都依赖它。 */
+.md-header {
+  background: var(--color-surface-glass-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--color-hairline);
+  box-shadow: var(--glass-shadow-resting);
+  color: var(--color-ink);
+}
+
+.md-header__inner {
+  padding: 0 var(--space-sm);
+}
+
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: var(--tracking-heading);
+}
+
+.md-header__topic:first-child {
+  font-weight: 600;
+}
+
+.md-header__button {
+  color: var(--color-ink-secondary);
+}
+
+.md-header__button:hover {
+  color: var(--color-ink);
+  opacity: 1;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  border-radius: var(--radius-sm);
+}
+
+/* 顶栏里的仓库链接（.md-source）也走玻璃 */
+.md-header__source,
+.md-nav__source {
+  background: var(--color-surface-glass);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-full);
+  box-shadow: var(--glass-bevel-inset);
+  color: var(--color-ink-secondary);
+  transition: color var(--dur-med) var(--ease-out),
+    background var(--dur-med) var(--ease-out);
+}
+
+.md-header__source:hover,
+.md-nav__source:hover {
+  background: var(--color-surface-raised);
+  color: var(--color-ink);
+}
+
+/* --- 侧边栏 ---------------------------------------------------------------
+   玻璃面板。位置 / 高度 / overflow 一概不动，只加材质，避免破坏吸顶与滚动。 */
+.md-sidebar__scrollwrap {
+  background: var(--color-surface-glass);
+  -webkit-backdrop-filter: var(--glass-blur-soft);
+  backdrop-filter: var(--glass-blur-soft);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+  padding: var(--space-xs) var(--space-2xs);
+}
+
+/* 抽屉（移动端） */
+.md-nav--primary .md-nav__title,
+.md-nav--secondary .md-nav__title {
+  font-weight: 600;
+  color: var(--color-ink-secondary);
+  letter-spacing: var(--tracking-label);
+}
+
+/* --- 正文容器 -------------------------------------------------------------
+   刻意不给正文套大玻璃板：DESIGN.md 要求「页面本身保持安静，玻璃浮在珍珠底上」，
+   而且玻璃嵌套超过两层就失去折射错觉。正文直接落在珍珠底上，
+   玻璃只给到具体的组件（表格 / 代码 / 提示框 / 图片）。 */
+.md-content__inner {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-3xl);
+}
+
+/* --- 页脚 ----------------------------------------------------------------- */
+.md-footer {
+  background: var(--color-surface-glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-top: 1px solid var(--color-hairline);
+  color: var(--color-ink-secondary);
+}
+
+.md-footer-meta {
+  background: transparent;
+}
+
+.md-footer-meta__inner {
+  padding: var(--space-sm) var(--space-xs);
+}
+
+.md-copyright {
+  color: var(--color-ink-tertiary);
+  font-size: var(--text-label);
+}
+
+.md-copyright__highlight {
+  color: var(--color-ink-secondary);
+}
+
+.md-footer-nav__link {
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.md-footer-nav__title,
+.md-footer-nav__direction {
+  font-weight: 500;
+}
+
+/* 跳转链接 */
+.md-skip {
+  background: var(--color-ink);
+  color: var(--color-ink-inverse);
+  border-radius: var(--radius-full);
+  box-shadow: var(--glass-shadow-floating);
+  font-size: var(--text-label);
+}
+
+/* ==========================================================================
+   5. 导航
+   ========================================================================== */
+
+.md-nav {
+  font-size: var(--text-label);
+  line-height: 1.5;
+}
+
+/* 分组标题：Aether 的 micro 层级（小、加粗、宽字距、大写字重），
+   不用彩色左边框——那套靛蓝装饰不属于本系统。 */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link,
 .md-nav__item--section > .md-nav__link {
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: #4f46e5 !important;
-  padding: 6px 12px;
-  margin: 6px 0 2px 0;
-  border-left: 3px solid #6366f1;
-  background: linear-gradient(90deg, rgba(99,102,241,0.08), transparent);
-  border-radius: 0 6px 6px 0;
-  transition: all 0.2s;
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: var(--tracking-micro);
+  text-transform: uppercase;
+  color: var(--color-ink-tertiary);
+  margin-top: var(--space-md);
+  padding-left: var(--space-xs);
+}
+
+.md-nav__item--section {
+  margin: var(--space-sm) 0;
 }
 
 .md-nav__item--section > .md-nav__link:hover {
-  border-left-color: #312e81;
-  background: linear-gradient(90deg, rgba(99,102,241,0.15), transparent);
-  color: #3730a3 !important;
+  color: var(--color-ink);
 }
 
-/* 展开状态 */
-.md-nav__item--section.md-nav__item--nested > .md-nav__link {
-  font-weight: 700;
+/* 子页面链接：药丸形，悬停上一层玻璃，选中翻成炭黑chip */
+.md-nav__link {
+  border-radius: var(--radius-full);
+  padding: var(--space-2xs) var(--space-sm);
+  margin-top: var(--space-3xs);
+  color: var(--color-ink-secondary);
+  transition: color var(--dur-med) var(--ease-out),
+    background var(--dur-med) var(--ease-out);
 }
 
-/* === 子页面链接 — 灰字、缩进 === */
-.md-nav__item--section li .md-nav__link {
-  font-weight: 400;
-  font-size: 0.78rem;
-  color: #64748b !important;
-  padding: 3px 12px 3px 20px;
-  border-left: 3px solid transparent;
-  transition: all 0.15s;
+.md-nav__link:hover {
+  color: var(--color-ink);
+  background: var(--color-surface-glass-strong);
 }
 
-.md-nav__item--section li .md-nav__link:hover {
-  color: #1e293b !important;
-  background: rgba(99, 102, 241, 0.05);
-  border-left-color: rgba(99, 102, 241, 0.3);
+.md-nav__link--active,
+.md-nav__item .md-nav__link--active,
+.md-nav__item .md-nav__link--active code {
+  color: var(--color-ink-inverse);
+  background: var(--color-ink);
+  font-weight: 500;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 6px 14px -6px rgba(15, 23, 42, 0.45);
 }
 
-/* 当前选中 */
-.md-nav__item--section li .md-nav__link--active {
-  color: #4f46e5 !important;
-  font-weight: 600;
-  background: rgba(99, 102, 241, 0.08);
-  border-left-color: #6366f1;
+.md-nav__link--active:hover {
+  color: var(--color-ink-inverse);
+  background: var(--color-ink);
 }
 
-/* === 全局美化 === */
+/* 嵌套层级用内缩代替竖线 */
+.md-nav__item .md-nav__list .md-nav__link {
+  padding-left: var(--space-lg);
+}
 
-/* 表格 */
-.md-typeset table:not([class]) {
-  border-radius: 8px;
+/* 目录（右侧）当前阅读位置 */
+.md-nav--secondary .md-nav__link--active,
+.md-nav--secondary .md-nav__link--passed {
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.md-nav--secondary .md-nav__link--passed {
+  color: var(--color-ink-tertiary);
+}
+
+.md-nav--secondary .md-nav__link {
+  border-radius: var(--radius-full);
+}
+
+/* ==========================================================================
+   6. 搜索
+   ========================================================================== */
+
+.md-search__form {
+  background: var(--color-surface-glass-strong);
+  -webkit-backdrop-filter: var(--glass-blur-soft);
+  backdrop-filter: var(--glass-blur-soft);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-full);
+  box-shadow: var(--glass-bevel-inset);
+  color: var(--color-ink);
+  transition: border-color var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-med) var(--ease-out),
+    background var(--dur-med) var(--ease-out);
+}
+
+.md-search__form:hover {
+  background: var(--color-surface-raised);
+}
+
+.md-search__input {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+.md-search__input::placeholder {
+  color: var(--color-ink-tertiary);
+}
+
+.md-search__icon {
+  color: var(--color-ink-tertiary);
+}
+
+/* 聚焦：发丝线换成系统蓝，并叠加标准焦点环 */
+.md-search__inner:focus-within .md-search__form,
+.md-search__form:focus-within {
+  border-color: rgba(10, 132, 255, 0.45);
+  box-shadow: var(--glass-bevel-inset), var(--focus-ring);
+}
+
+.md-search__output {
+  background: var(--color-surface-raised);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-floating);
+  margin-top: var(--space-xs);
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
-.md-typeset table:not([class]) th {
-  background: #6366f1;
-  color: white;
+
+.md-search__scrollwrap {
+  background: transparent;
+}
+
+.md-search-result__meta {
+  background: transparent;
+  color: var(--color-ink-tertiary);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-micro);
+  text-transform: uppercase;
   font-weight: 600;
 }
-.md-typeset table:not([class]) tr:hover td {
-  background: rgba(99,102,241,0.04);
+
+.md-search-result__list {
+  background: transparent;
 }
 
-/* 引用块 */
-.md-typeset blockquote {
-  border-left: 3px solid #6366f1;
-  background: rgba(99,102,241,0.04);
-  border-radius: 0 8px 8px 0;
-  padding: 12px 16px;
+.md-search-result__item {
+  border-top: 1px solid var(--color-hairline);
 }
 
-/* 链接 */
-.md-typeset a {
-  color: #4f46e5;
-}
-.md-typeset a:hover {
-  color: #3730a3;
-  text-decoration: underline;
+.md-search-result__link {
+  transition: background var(--dur-med) var(--ease-out);
 }
 
-/* 内联代码 */
-.md-typeset code {
-  border-radius: 4px;
-  padding: 2px 6px;
-  background: rgba(99,102,241,0.08);
-  color: #4f46e5;
+.md-search-result__link:focus,
+.md-search-result__link:hover {
+  background: var(--color-surface-glass);
 }
 
-/* 代码块 */
-.md-typeset pre > code {
-  border-radius: 8px;
+.md-search-result__title {
+  color: var(--color-ink);
+  font-weight: 500;
 }
 
-/* 标题 */
+.md-search-result__teaser {
+  color: var(--color-ink-secondary);
+}
+
+.md-search-result mark {
+  color: var(--color-ink);
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-sm);
+  padding: 0 0.15em;
+}
+
+.md-search__share {
+  color: var(--color-ink-tertiary);
+}
+
+/* 移动端搜索遮罩 */
+.md-search--active .md-search__overlay,
+.md-overlay {
+  background: rgba(15, 23, 42, 0.32);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+/* ==========================================================================
+   7. 正文排版
+   ========================================================================== */
+
+.md-typeset {
+  font-size: var(--text-body);
+  line-height: var(--text-body-lh);
+  letter-spacing: var(--tracking-body);
+  color: var(--color-ink);
+}
+
+/* 标题：权重上限 600，超过就破坏系统的冷静语气；大标题收紧字距 */
+.md-typeset h1 {
+  font-size: var(--text-h1);
+  line-height: var(--text-h1-lh);
+  letter-spacing: var(--tracking-display);
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-lg);
+}
+
 .md-typeset h2 {
-  font-weight: 700;
-  color: #1e293b;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 4px;
+  font-size: var(--text-h2);
+  line-height: var(--text-h2-lh);
+  letter-spacing: var(--tracking-heading);
+  font-weight: 600;
+  color: var(--color-ink);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-hairline);
+  margin: var(--space-2xl) 0 var(--space-md);
 }
 
 .md-typeset h3 {
   font-weight: 600;
-  color: #334155;
+  letter-spacing: var(--tracking-heading);
+  color: var(--color-ink);
+  margin: var(--space-xl) 0 var(--space-sm);
 }
 
-/* 回到顶部 */
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  font-weight: 600;
+  color: var(--color-ink-secondary);
+  margin: var(--space-lg) 0 var(--space-xs);
+}
+
+.md-typeset h5,
+.md-typeset h6 {
+  text-transform: none;
+}
+
+/* 段落与列表的呼吸感 */
+.md-typeset p,
+.md-typeset ul,
+.md-typeset ol {
+  margin: 1em 0;
+}
+
+.md-typeset li {
+  margin-bottom: var(--space-2xs);
+}
+
+.md-typeset hr {
+  border-bottom: 1px solid var(--color-hairline);
+  margin: var(--space-2xl) 0;
+}
+
+/* 链接：系统蓝，悬停加下划线 */
+.md-typeset a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.md-typeset a:hover,
+.md-typeset a:focus {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* 标题里的锚点符号：安静地待着，悬停才显形 */
+.md-typeset .headerlink {
+  color: var(--color-ink-tertiary);
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.md-typeset h1:hover .headerlink,
+.md-typeset h2:hover .headerlink,
+.md-typeset h3:hover .headerlink,
+.md-typeset h4:hover .headerlink,
+.md-typeset .headerlink:focus {
+  opacity: 1;
+}
+
+/* 粗体与强调 */
+.md-typeset strong {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* 图片：玻璃板托底 */
+.md-typeset img:not([class]) {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hairline);
+  box-shadow: var(--glass-shadow-resting);
+}
+
+/* ==========================================================================
+   8. 组件
+   ========================================================================== */
+
+/* --- 表格 -----------------------------------------------------------------
+   一张玻璃板。表头用极淡的墨色水洗，不用彩色填充。 */
+.md-typeset table:not([class]) {
+  background: var(--color-surface-glass-strong);
+  -webkit-backdrop-filter: var(--glass-blur-soft);
+  backdrop-filter: var(--glass-blur-soft);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+  font-size: var(--text-label);
+  /* 用 auto 而不是 hidden：宽表格在窄屏上仍然要能横向滚动，
+     同时 auto 也会建立裁剪上下文，保住圆角。 */
+  overflow: auto;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--aether-wash);
+  color: var(--color-ink);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  border-bottom: 1px solid var(--color-hairline-strong);
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 1px solid var(--color-hairline);
+  color: var(--color-ink-secondary);
+}
+
+.md-typeset table:not([class]) tr:hover td {
+  background: var(--color-surface-glass);
+}
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* --- 代码 ----------------------------------------------------------------- */
+
+/* 行内代码：淡墨底 + 石墨字。不着色——强调色只留给链接和焦点。 */
+.md-typeset code {
+  background: var(--aether-wash-strong);
+  color: var(--color-ink);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+  font-weight: 400;
+  box-shadow: none;
+}
+
+/* 代码块：一块玻璃板，等宽字体 */
+.md-typeset pre > code {
+  background: var(--color-surface-raised);
+  -webkit-backdrop-filter: var(--glass-blur-soft);
+  backdrop-filter: var(--glass-blur-soft);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--text-label);
+  line-height: 1.7;
+  color: var(--color-ink);
+}
+
+.md-typeset pre {
+  background: transparent;
+}
+
+/* 代码块右上角的按钮条（复制 / 全选）——Material 9.7 的 API 是
+   .md-code__nav > .md-code__button，旧的 .md-clipboard 已不再生成。 */
+.md-code__nav {
+  background: var(--color-surface-glass-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-full);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+  padding: var(--space-3xs);
+  gap: var(--space-3xs);
+}
+
+.md-code__button {
+  color: var(--color-ink-tertiary);
+  border-radius: var(--radius-full);
+  transition: color var(--dur-med) var(--ease-out),
+    background var(--dur-med) var(--ease-out);
+}
+
+.md-code__button:hover,
+.md-code__button:focus {
+  color: var(--color-ink);
+  background: var(--color-surface-glass);
+}
+
+/* 代码注释里的行号、标注 */
+.md-typeset .md-annotation__index > ::before {
+  background: var(--color-ink);
+  color: var(--color-ink-inverse);
+}
+
+.md-tooltip {
+  background: var(--color-surface-raised);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-raised);
+  color: var(--color-ink-secondary);
+}
+
+/* --- 提示框 --------------------------------------------------------------- */
+
+.md-typeset .admonition,
+.md-typeset details {
+  background: var(--color-surface-glass-strong);
+  -webkit-backdrop-filter: var(--glass-blur-soft);
+  backdrop-filter: var(--glass-blur-soft);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+  font-size: var(--text-body);
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-weight: 600;
+  letter-spacing: var(--tracking-heading);
+  background: transparent;
+  border: none;
+}
+
+/* 类型只体现在图标和标题上，不铺满整块底色 */
+.md-typeset .admonition-title::before,
+.md-typeset summary::before {
+  background-color: currentColor;
+}
+
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  color: var(--color-ink-secondary);
+}
+
+.md-typeset .info > .admonition-title,
+.md-typeset .info > summary,
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary {
+  color: var(--color-accent);
+}
+
+.md-typeset .success > .admonition-title,
+.md-typeset .success > summary,
+.md-typeset .check > .admonition-title,
+.md-typeset .check > summary {
+  color: var(--color-success);
+}
+
+.md-typeset .warning > .admonition-title,
+.md-typeset .warning > summary,
+.md-typeset .caution > .admonition-title,
+.md-typeset .caution > summary {
+  color: var(--color-warning);
+}
+
+.md-typeset .danger > .admonition-title,
+.md-typeset .danger > summary,
+.md-typeset .failure > .admonition-title,
+.md-typeset .failure > summary,
+.md-typeset .bug > .admonition-title,
+.md-typeset .bug > summary {
+  color: var(--color-danger);
+}
+
+/* --- 引用块 ---------------------------------------------------------------
+   Material 的规则带 [dir=ltr] 前缀（特异度 0,2,1），这里必须同样带上 [dir]
+   才盖得住，否则左侧的引用竖条会保留 Material 的 8px 灰边。 */
+[dir] .md-typeset blockquote {
+  background: var(--color-surface-glass);
+  border-left: 3px solid var(--color-ink-tertiary);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: var(--space-sm) var(--space-lg);
+  color: var(--color-ink-secondary);
+}
+
+/* --- 键盘按键 ------------------------------------------------------------- */
+.md-typeset kbd {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-micro);
+  color: var(--color-ink-secondary);
+  /* --md-typeset-kbd-color 已在第 2/3 节按明暗两套主题分别标定 */
+  background: var(--md-typeset-kbd-color);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-bevel-inset);
+  padding: 0.15em 0.4em;
+}
+
+/* --- 复选框（任务列表）-----------------------------------------------------
+   Material 把真正的 <input type="checkbox"> 设成 opacity:0 / z-index:-1，
+   可见的是 .task-list-indicator::before 这个遮罩图标。
+   所以这里改的是遮罩图标的着色，而不是 input 本身。 */
+.md-typeset .task-list-item {
+  list-style: none;
+}
+
+.md-typeset .task-list-indicator::before {
+  background-color: var(--color-ink-tertiary);
+}
+
+/* 已勾选：实心石墨，对应 Aether 里 checkbox-checked 的炭黑底 */
+.md-typeset [type="checkbox"]:checked + .task-list-indicator::before {
+  background-color: var(--color-ink);
+}
+
+/* --- 按钮 ----------------------------------------------------------------- */
+.md-typeset .md-button {
+  color: var(--color-ink);
+  background: var(--color-surface-glass-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-full);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 500;
+  letter-spacing: var(--tracking-body);
+  padding: var(--space-sm) var(--space-lg);
+  transition: transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-med) var(--ease-out),
+    background var(--dur-med) var(--ease-out);
+}
+
+.md-typeset .md-button:hover,
+.md-typeset .md-button:focus {
+  transform: translateY(-1px);
+  background: var(--color-surface-raised);
+  border-color: var(--color-hairline);
+  box-shadow: var(--glass-bevel-inset), var(--glass-shadow-raised);
+  color: var(--color-ink);
+}
+
+.md-typeset .md-button:active {
+  transform: scale(0.97);
+  box-shadow: var(--glass-bevel-pressed), var(--glass-shadow-resting);
+}
+
+/* 主按钮：炭黑实心，系统里唯一允许的大面积炭黑 */
+.md-typeset .md-button--primary {
+  background: var(--color-ink);
+  color: var(--color-ink-inverse);
+  border-color: rgba(15, 23, 42, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 10px 24px -8px rgba(15, 23, 42, 0.45);
+}
+
+.md-typeset .md-button--primary:hover,
+.md-typeset .md-button--primary:focus {
+  background: #2a2a2d;
+  color: var(--color-ink-inverse);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .md-button--primary:hover,
+[data-md-color-scheme="slate"] .md-typeset .md-button--primary:focus {
+  background: #ffffff;
+  color: var(--color-ink-inverse);
+}
+
+/* --- 回到顶部 ------------------------------------------------------------- */
 .md-top {
-  background: #6366f1 !important;
-  box-shadow: 0 2px 8px rgba(99,102,241,0.35);
+  background: var(--color-ink);
+  color: var(--color-ink-inverse);
+  border: none;
+  border-radius: var(--radius-full);
+  box-shadow: var(--glass-shadow-floating);
+  font-size: var(--text-label);
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-md);
+  transition: transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-med) var(--ease-out);
 }
 
-/* 搜索框 */
-.md-search__input {
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-}
-.md-search__input:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 2px rgba(99,102,241,0.15);
+.md-top:hover {
+  background: var(--color-ink);
+  color: var(--color-ink-inverse);
+  transform: translate(-50%, -1px);
+  box-shadow: var(--glass-shadow-floating);
 }
 
-/* === 暗色模式 === */
-[data-md-color-scheme="slate"] .md-nav__item--section > .md-nav__link {
-  color: #a5b4fc !important;
-  border-left-color: #818cf8;
-  background: linear-gradient(90deg, rgba(129,140,248,0.12), transparent);
+/* --- 页签 / 元信息 -------------------------------------------------------- */
+.md-typeset .md-tag,
+.md-typeset .md-badge {
+  background: var(--color-surface-glass);
+  color: var(--color-ink-secondary);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-full);
+  box-shadow: var(--glass-bevel-inset);
 }
-[data-md-color-scheme="slate"] .md-nav__item--section > .md-nav__link:hover {
-  color: #c7d2fe !important;
-  border-left-color: #a5b4fc;
+
+/* ==========================================================================
+   9. 图标 — Lucide
+   --------------------------------------------------------------------------
+   图标本体在 overrides/.icons/lucide/，通过 mkdocs.yml 的 theme.icon.* 槽位替换，
+   不需要改模板。这里只处理配置槽位管不到的两件事。
+   ========================================================================== */
+
+/* 9.1 Material 给 .md-icon svg 硬设了 fill:currentcolor，会把 Lucide 的描边
+   图标涂成实心——纯线条图标（menu、x）甚至会整块消失。必须清掉填充。 */
+.md-icon svg,
+.md-header__button.md-logo svg,
+.md-footer__link svg,
+.md-social__link svg {
+  fill: none;
 }
-[data-md-color-scheme="slate"] .md-nav__item--section li .md-nav__link {
-  color: #94a3b8 !important;
+
+/* 9.2 代码块按钮和导航箭头由 Material 用 CSS 遮罩绘制，只能用变量覆盖。
+   遮罩只看 alpha 通道，所以描边色写死黑色（# 在 data URI 里要转义成 %23）。 */
+:root {
+  --md-code-copy-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23000" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" rx="2" ry="2" width="14" height="14"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>');
+  --md-clipboard-icon: var(--md-code-copy-icon);
+  --md-nav-icon--next: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23000" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>');
+  --md-nav-icon--prev: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23000" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>');
+  --md-toc-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23000" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></svg>');
 }
-[data-md-color-scheme="slate"] .md-nav__item--section li .md-nav__link:hover {
-  color: #e2e8f0 !important;
+
+/* ==========================================================================
+   10. 交互与可访问性
+   ========================================================================== */
+
+/* 焦点环：任何可交互表面都必须保留。
+   DESIGN.md 明确要求不得在重塑样式时移除焦点态。 */
+.md-typeset a:focus-visible,
+.md-nav__link:focus-visible,
+.md-header__button:focus-visible,
+.md-search__input:focus-visible,
+.md-top:focus-visible,
+.md-clipboard:focus-visible,
+.md-typeset .md-button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-full);
 }
-[data-md-color-scheme="slate"] .md-nav__item--section li .md-nav__link--active {
-  color: #c7d2fe !important;
-  border-left-color: #818cf8;
+
+.md-typeset pre > code:focus-visible,
+.md-typeset img:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
-[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
-  background: #4f46e5;
+
+/* 滚动条：细、安静 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.2) transparent;
 }
-[data-md-color-scheme="slate"] .md-typeset h2 {
-  color: #f1f5f9;
-  border-bottom-color: #334155;
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
-[data-md-color-scheme="slate"] .md-typeset h3 {
-  color: #cbd5e1;
+
+*::-webkit-scrollbar-track {
+  background: transparent;
 }
-[data-md-color-scheme="slate"] .md-typeset code {
-  background: rgba(129,140,248,0.15);
-  color: #a5b4fc;
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.16);
+  border-radius: var(--radius-full);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.28);
+}
+
+[data-md-color-scheme="slate"] * {
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+[data-md-color-scheme="slate"] *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+[data-md-color-scheme="slate"] *::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* 动效降级由 system.css 的 prefers-reduced-motion 规则统一兜底 */
+
+/* ==========================================================================
+   11. 页面级组件
+   --------------------------------------------------------------------------
+   只服务于两个页面：首页的 hero 区块，和「设计系统」展示页。
+   其余页面用不到，不影响日常文档。
+   ========================================================================== */
+
+/* --- 首页 hero ------------------------------------------------------------- */
+.aa-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl) 0 var(--space-3xl);
+}
+
+.aa-hero h1 {
+  font-size: var(--text-display);
+  line-height: var(--text-display-lh);
+  letter-spacing: var(--tracking-display);
+  font-weight: 600;
+  margin: 0;
+  max-width: 18ch;
+}
+
+.aa-hero p {
+  max-width: 46ch;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-ink-secondary);
+}
+
+.aa-hero .md-button {
+  margin: var(--space-xs) var(--space-2xs) 0;
+}
+
+/* 正文图标用 .aa-i / .aa-i-<name>，定义在自动生成的 icons.css 里 */
+
+/* --- 展示页：通用 ---------------------------------------------------------- */
+.aa-note {
+  background: var(--color-surface-glass);
+  border: 1px solid var(--color-hairline);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  padding: var(--space-sm) var(--space-lg);
+  margin: var(--space-lg) 0;
+}
+
+.aa-note p:first-child {
+  margin-top: 0;
+}
+
+.aa-note p:last-child {
+  margin-bottom: 0;
+}
+
+.aa-typeset p,
+.aa-type p {
+  margin: var(--space-xs) 0;
+}
+
+.aa-type .h1,
+.aa-type .h2,
+.aa-type .display {
+  color: var(--color-ink);
+}
+
+/* --- 展示页：色板 ---------------------------------------------------------- */
+.aa-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0;
+}
+
+.aa-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-sm);
+  background: var(--color-surface-glass);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-bevel-inset);
+}
+
+.aa-swatch__chip {
+  height: 3rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hairline);
+  box-shadow: var(--glass-bevel-inset);
+}
+
+.aa-swatch b {
+  font-size: var(--text-label);
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.aa-swatch code {
+  font-size: var(--text-micro);
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: var(--color-ink-tertiary);
+}
+
+/* --- 展示页：卡片与玻璃 ---------------------------------------------------- */
+.aa-cards,
+.aa-glass-demo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+  align-items: start;
+}
+
+.aa-glass-demo > * {
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+/* --- 展示页：表单 ---------------------------------------------------------- */
+.aa-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 32rem;
+  margin: var(--space-lg) 0;
+}
+
+.aa-form .row-wrap {
+  gap: var(--space-lg);
+}
+
+/* --- 首页导航表：小屏下别把说明列挤没 -------------------------------------- */
+@media screen and (max-width: 44.9375em) {
+  .aa-hero h1 {
+    font-size: var(--text-h1);
+  }
+
+  .aa-hero {
+    padding: var(--space-lg) 0 var(--space-xl);
+  }
+}
+
+/* --- 图片放大（lightbox.js）----------------------------------------------- */
+
+/* 正文图片的「可点击」提示：指针 + 悬停微亮。图片本身的圆角/发丝线/阴影
+   在第 7 节已经给过了。 */
+.aa-zoomable {
+  cursor: zoom-in;
+  transition: box-shadow var(--dur-med) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.aa-zoomable:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--glass-shadow-raised);
+}
+
+.aa-zoomable:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.aa-lightbox {
+  position: fixed;
+  inset: 0;
+  /* 要盖住 Material 的搜索遮罩和顶栏（它们的 z-index 到 4） */
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: rgba(15, 23, 42, 0.72);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  backdrop-filter: blur(8px) saturate(140%);
+  cursor: zoom-out;
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.aa-lightbox[hidden] {
+  display: none;
+}
+
+.aa-lightbox.is-open {
+  opacity: 1;
+}
+
+.aa-lightbox__img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hairline);
+  box-shadow: var(--glass-shadow-floating);
+  background: #ffffff; /* 截图是浅色底，暗色模式下也保持白底不透明 */
+  cursor: default;
+  transform: scale(0.97);
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.aa-lightbox.is-open .aa-lightbox__img {
+  transform: scale(1);
+}
+
+.aa-lightbox__close {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--color-ink-inverse);
+  background: var(--color-ink);
+  border: 1px solid rgba(15, 23, 42, 0.6);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.aa-lightbox__close:hover {
+  transform: scale(1.06);
+}
+
+.aa-lightbox__close:active {
+  transform: scale(0.94);
+}
+
+.aa-lightbox__close:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.aa-lightbox__close .aa-i {
+  width: 20px;
+  height: 20px;
+}
+
+[data-md-color-scheme="slate"] .aa-lightbox__close {
+  color: var(--color-ink-inverse);
+  background: var(--color-ink);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+/* 打开预览时锁住背景滚动 */
+.aa-lightbox-open {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   12. 打印
+   ========================================================================== */
+
+@media print {
+  .md-header,
+  .md-sidebar,
+  .md-top,
+  .md-footer {
+    display: none;
+  }
+
+  body {
+    background: #ffffff;
+    background-image: none;
+  }
+
+  .md-typeset pre > code,
+  .md-typeset table:not([class]) {
+    box-shadow: none;
+    background: #ffffff;
+  }
 }

@@ -4,21 +4,40 @@ site_description: 基于UE5 5.4.4全蓝图的虚拟仿真化学实验教学软�
 theme:
   name: material
   language: zh
+  # 关掉 Material 默认的 Roboto 网络字体，改用设计系统自带的 Inter / JetBrains Mono
+  # （由 stylesheets/system.css 的 @import 拉取）
+  font: false
+  # 图标换成 Lucide（DESIGN.md 指定）。图标文件放在 overrides/.icons/lucide/，
+  # 走 Material 的配置槽位替换，不改模板——升级 mkdocs-material 时不会失效。
+  custom_dir: overrides
+  icon:
+    logo: lucide/flask-conical
+    menu: lucide/menu
+    search: lucide/search
+    close: lucide/x
+    top: lucide/arrow-up
+    previous: lucide/arrow-left
+    next: lucide/arrow-right
+    share: lucide/share-2
+    repo: lucide/repo
+    # tag 槽位要的是「标签类型 → 图标」的映射，不能直接写字符串
+    tag:
+      default: lucide/tag
   palette:
+    # 注：这里的 primary/accent 只是给 <body> 打一个 data-md-color-* 标记，
+    # 实际配色由 stylesheets/extra.css 按 Aether 设计系统的令牌整体接管。
     - scheme: default
       primary: indigo
       accent: indigo
       toggle:
-        icon: material/brightness-7
+        icon: lucide/moon
         name: 切换暗色模式
     - scheme: slate
       primary: indigo
       accent: indigo
       toggle:
-        icon: material/brightness-4
+        icon: lucide/sun
         name: 切换亮色模式
-  extra_css:
-    - stylesheets/extra.css
   features:
     - navigation.sections
     - navigation.expand
@@ -28,6 +47,18 @@ theme:
     - search.share
     - content.code.copy
     - content.code.annotate
+
+# extra_css 是 MkDocs 的顶层配置项（不能写在 theme: 下面，否则会被忽略）。
+# 顺序即层叠顺序：先加载设计系统本体，再加载适配层。
+extra_css:
+  - stylesheets/system.css   # Aether 设计系统本体（与 bad-dodo-83-64e996bc/css/system.css 逐字节一致，请勿就地修改）
+  - stylesheets/extra.css    # MkDocs Material 适配层
+  - stylesheets/icons.css    # 图标工具类，由 tools/build_icons_css.py 生成，勿手工编辑
+
+# 正文图片点击放大。自制的小脚本，不引入 mkdocs-glightbox 之类的额外依赖，
+# 样式沿用 Aether 的玻璃遮罩，和站点是同一套材质。
+extra_javascript:
+  - javascripts/lightbox.js
 
 nav:
   - 首页: index.md
@@ -49,6 +80,7 @@ nav:
       - 模型资源: assets/models.md
   - 第三方插件:
       - 插件说明: plugins/third-party.md
+  - 设计系统: design-system.md
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -57,5 +89,16 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - admonition
+  # slugify 换成 pymdownx 的实现：MkDocs 默认的会把非 ASCII 字符全部丢掉，
+  # 导致 `## 按钮` 的锚点变成毫无意义的 `#_1` `#_2`。换掉之后中文锚点就是
+  # 中文本身，站内跳转和分享链接都能用了。
   - toc:
       permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  # attr_list 让正文里可以这样写按钮：
+  #   [文字](链接){ .md-button .md-button--primary }
+  - attr_list
+  # md_in_html 让块级 HTML（比如首页的 hero 区块）里也能写 Markdown
+  - md_in_html
