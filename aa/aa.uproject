@@ -76,6 +76,11 @@
 			"Name": "EasyBatchRenamer",
 			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/Fab/product/9eff1d0d-981b-4bfd-a324-2c1d926096e2"
+		},
+		{
+			"Name": "UAssetBrowser",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/648d582688654f7db09939af111c45b5"
 		}
 	]
 }

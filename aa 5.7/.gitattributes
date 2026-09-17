@@ -1,0 +1,4 @@
+# Windows 批处理必须用 CRLF 换行，否则 cmd.exe 解析会出问题。
+# 这条规则让 本地预览.cmd 无论在哪台机器、用什么 git 配置检出，都是 CRLF。
+*.cmd text eol=crlf
+*.bat text eol=crlf
